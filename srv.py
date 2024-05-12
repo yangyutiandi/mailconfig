@@ -100,6 +100,6 @@ if __name__ == "__main__":
     import json
     # x = srv("op.pl")
     # x = srv('pobox.com')
-    x = resolve_mx("qq.com")
+    x = resolve_mx("pobox.com")
     json_string = json.dumps(x, indent=4, default=lambda obj: obj.__dict__)
     print(json_string)

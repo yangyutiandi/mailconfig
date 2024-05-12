@@ -2,12 +2,13 @@
 use http/https get or post to get a xml string
 interface: http_get, https_get, http_post, https_post, get_redirect_post
 param a url, (a domain of mailserver)
-return dict,
+
+return a dict,
 error: some error happened, this error is a http(s) error
 xml: a string in xml format
 redirect: all redirect paths in http header, from person lookup url to final url get the xml
 
-in https return,
+https_method return,
 verified : is certificate can be verified
 
 in get_redirect_post return
@@ -74,8 +75,6 @@ def https_get(url):
     #  request from HTTPS
     re = {}
     try:
-        # 注意重定向的次数
-        # 使用 requests.Session() session.max_redirects 方式限定
         response = requests.get(url, verify=certifi.where(), timeout=DEFAULT_TIMEOUT, headers={'User-Agent': user_agent})
         re["verified"] = True
     except requests.exceptions.SSLError:
@@ -189,8 +188,7 @@ def get_redirect_post(url, mailaddress):
 
 
 if __name__ == "__main__":
-    # main()
-    domain = "locemail.me"
+    domain = "pobox.com"
     url1 = f"https://{domain}/autodiscover/autodiscover.xml"
     url2 = f"https://autodiscover.{domain}/autodiscover/autodiscover.xml"
     print(https_get(url1))

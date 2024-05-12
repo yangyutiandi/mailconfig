@@ -26,19 +26,15 @@ def doscan(mailaddress, domain, flag):
     print(json_string)
 
 def main():
-    # 创建 ArgumentParser 对象
 
     parser = argparse.ArgumentParser(description='a tool to get all possible config of an email address')
 
-    # 添加必传参数 mailaddress
     parser.add_argument('mailaddress', type=str, help='a mail address is required')
 
-    # 添加可选参数
     parser.add_argument('-c', '--autoconfig', action='store_true', help='look up from all autoconfig url')
     parser.add_argument('-d', '--autodiscover', action='store_true', help='look up from all autodiscover url')
     parser.add_argument('-s', '--srv', action='store_true', help='look up from DNS SRV')
 
-    # 解析命令行参数
     args = parser.parse_args()
 
     list = args.mailaddress.split("@")

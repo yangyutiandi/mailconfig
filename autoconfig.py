@@ -26,8 +26,11 @@ def extract_Provider_Domain(content):
 
 def parse_autoconfig(content):
     '''
-    parse a xml into autoconfig struct,
-    if error happened, return a "extract_error"
+    parse a xml into autoconfig struct
+
+    :param content: xml form content
+    :return: autoconfig struct
+             if error happened, return a "extract_error"
     '''
     data = {}
     try:
@@ -101,6 +104,13 @@ def from_ISPDB(domain):
     return cur
 
 def autoconfig(domain, mailaddress):
+    '''
+    we also consider the back-off condition : query the mx record and then get autoconfig info
+
+    :param domain: mail domain
+    :param mailaddress:  mail address in form of username@domain
+    :return: autoconfig result
+    '''
 
     data = {}
     # step 1&2, we lookup the autoconfig file from the site of email server
@@ -153,14 +163,12 @@ def autoconfig(domain, mailaddress):
     data["parent domain"] = {}
     data["parent domain"]["parent domain"] = parent_domain
     if parent_domain != regdomain:
-        # Todo:  lookup parent domain
         url4 = f"https://autoconfig.{parent_domain}/mail/config-v1.1.xml?emailaddress={mailaddress}"
         cur = https_get(url4)
         if "xml" in cur:
             cur["config"] = parse_autoconfig(cur["xml"])
         data["parent domain"]["https_get"] = cur
         data["parent domain"]["ISPDB"] = from_ISPDB(regdomain)
-        pass
     else:
         data["parent domain"]["info"] = "parent domain is same as the register domain"
     return data

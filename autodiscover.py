@@ -8,6 +8,12 @@ LOGGER = logging.getLogger(__name__)
 
 
 def autodiscover_srv(domain):
+    '''
+    We query the _autodiscover._tcp.{domain} SRV record to get the hostname
+
+    :param domain: mail domain
+    :return: ULR to get the autodiscover.xml
+    '''
     try:
         res = resolve_srv(f"_autodiscover._tcp.{domain}")
         if not res or not res['srv_record']:        #none list
@@ -28,10 +34,14 @@ def autodiscover_srv(domain):
 
 def parse_autodiscover(content):
     '''
+    details: https://msopenspecs.azureedge.net/files/MS-OXDSCLI/[MS-OXDSCLI].pdf
     parse a xml into autodiscover struct,
-    if error happened, return a "extract_error"
+
+    :param content: xml form content
+    :return: autodiscover struct
+             if error happened, return a "extract_error"
     '''
-    # details: https://msopenspecs.azureedge.net/files/MS-OXDSCLI/[MS-OXDSCLI].pdf
+
     # Notes: namespace for different xml!
     def is_element_present(element, tag, namespace):
         return element.find(tag, namespace) is not None
@@ -112,14 +122,21 @@ def parse_autodiscover(content):
         data = {"incomingServers": incoming_server_data, "outgoingServers": outgoing_server_data, "webmails": web_access_data}
     return data
 
-# redirect url found in the xml, we must use https post method, and cover the result get before
+
 def config_from_redirect(url, mailaddress, max_redirects=10):
     '''
-    除了 httpmethod返回结构之外，还有rediriect信息
-    redirect_path : xml重定向路径列表 url + mailaddress
-    redirect_xml : 信息，success为成功返回结果，其他字符串为有错误
-    可以将此结构直接覆盖原数据，error，config等都会更新，若没有得到config，也可以使用原config
-    通过redirect_xml判断redirect过程中遇到了什么错误
+    redirect found in the xml, we must use https post method, and cover the result got before
+    In addition to the return structure of the HTTMethod, there is also Rediriect information
+
+    :param url:     redirectUrl
+    :param mailaddress:     redirectAddr
+    :param max_redirects:   maximum number of redircet times
+    :return:    In addition to the return structure of the HTTMethod, there is also Rediriect information
+                Redirect_path: XML redirect path list URL+mailaddress
+                Redirect_XML: Information, "success" indicates success , while other strings indicate errors
+                This structure can directly overwrite the original data, and errors, configurations, etc.
+                If no configuration is obtained, the original configuration can also be used
+                Use redirect_XML to determine what errors were encountered during the redirect process
     '''
     # print(max_redirects)
     redirect_path = []
@@ -145,10 +162,15 @@ def config_from_redirect(url, mailaddress, max_redirects=10):
     return {"redirect_path": redirect_path, "redirect_xml": "Max redirects reached"}
 
 
-# allow_redirects=False 是否支持重定向，以及max_redirects=10设置最大重定向次数
 def autodiscover(domain, mailaddress):
+    '''
     # Ref: https://learn.microsoft.com/en-us/previous-versions/office/office-2010/cc511507(v=office.14)?redirectedfrom=MSDN
     # Ref: https://learn.microsoft.com/en-us/previous-versions/office/developer/exchange-server-interoperability-guidance/hh352638(v=exchg.140)
+
+    :param domain: mail domain
+    :param mailaddress:  mail address in form of username@domain
+    :return: autodiscover result
+    '''
 
     data = {}
     # Step 1 & 2
