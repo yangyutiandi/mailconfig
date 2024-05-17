@@ -48,7 +48,7 @@ def process_respond(response):
     return re
 
 def http_get(url):
-    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36 (Autoconfig Test from USTC, Quit please contact: mailservertest2023@gmail.com)"
+    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36 (Autoconfig Test)"
     # user_agent = "Mozilla/5.0"
     # request from HTTP
     re = {}
@@ -70,7 +70,7 @@ def http_get(url):
     return re
 
 def https_get(url):
-    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36 (Autoconfig Test from USTC, Quit please contact: mailservertest2023@gmail.com)"
+    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36 (Autoconfig Test)"
     # user_agent = "Mozilla/5.0"
     #  request from HTTPS
     re = {}
@@ -163,7 +163,7 @@ def get_redirect_post(url, mailaddress):
     """
     this function will redict a http get method to a https post method to get a xml string
     """
-    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36 (Autoconfig Test from USTC, Quit please contact: mailservertest2023@gmail.com)"
+    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36 (Autoconfig Test)"
     try:
         response = requests.get(url, timeout=DEFAULT_TIMEOUT, headers={"User-Agent": user_agent})
         if response.history:
