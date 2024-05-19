@@ -3,12 +3,14 @@ import argparse
 from autoconfig import autoconfig
 from autodiscover import autodiscover
 from srv import srv
+from buildin import buildin
 
 SCAN_AUTOCONFIG = 1
 SCAN_AUTODISCOVER = 2
 SCAN_SRV = 4
+SCAN_BUILDIN = 8
 
-SCAN_ALL = SCAN_AUTOCONFIG| SCAN_AUTODISCOVER | SCAN_SRV
+SCAN_ALL = SCAN_AUTOCONFIG| SCAN_AUTODISCOVER | SCAN_SRV | SCAN_BUILDIN
 
 def doscan(mailaddress, domain, flag):
     data = {}
@@ -21,6 +23,9 @@ def doscan(mailaddress, domain, flag):
     if (flag & SCAN_SRV):
         print("scanning srv")
         data["srv"] = srv(domain)
+    if (flag & SCAN_BUILDIN):
+        print("looking up the buildin list")
+        data["buildin"] = buildin(domain)
     print("done")
     json_string = json.dumps(data, indent=4, default=lambda obj: obj.__dict__)
     print(json_string)
@@ -34,6 +39,7 @@ def main():
     parser.add_argument('-c', '--autoconfig', action='store_true', help='look up from all autoconfig url')
     parser.add_argument('-d', '--autodiscover', action='store_true', help='look up from all autodiscover url')
     parser.add_argument('-s', '--srv', action='store_true', help='look up from DNS SRV')
+    parser.add_argument('-b', '--buildin', action='store_true', help='look up from mail client buildin provider list')
 
     args = parser.parse_args()
 
@@ -51,6 +57,8 @@ def main():
         flag |= SCAN_AUTODISCOVER
     if args.srv:
         flag |= SCAN_SRV
+    if args.buildin:
+        flag |= SCAN_BUILDIN
 
     if flag == 0 :       #default scan all
         flag = SCAN_ALL

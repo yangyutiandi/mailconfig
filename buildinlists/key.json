@@ -1,0 +1,7 @@
+{
+  "mailcore": ["domain_regular", "mx_regular"], 
+  "mailspring": [],
+  "nodemailer": [],
+  "DeltaChat": [],
+  "FairEmail": ["domain_regular"]
+}
