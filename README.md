@@ -1,7 +1,7 @@
 # mailconfig
 Get all possible mailconfig from your service provider
 
-run
+run : 
 python getconfig.py
 
 
