@@ -10,4 +10,4 @@ The./Autoconfig contains domain names in the form of auto-config.[eTLD]. This fi
 
 About:
 
-[1] eTLD can be found in the Public Suffix List(https://publicsuffix.org/list/public_suffix_list.dat). 
+[1] eTLD can be found in the [Public Suffix List](https://publicsuffix.org/list/public_suffix_list.dat). 
