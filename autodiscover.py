@@ -270,13 +270,6 @@ def autodiscover(domain, mailaddress):
 if __name__=="__main__":
     import json
 
-    x = autodiscover("ametiq.com", "admni@ametiq.com")  #need to redirect in xml
-    # x = autodiscover("soverin.net", "admni@soverin.net") # have srv
-    # x = autodiscover("cluemail.com", "admni@cluemail.com")  # need to redirct in http header
-    # x = autodiscover("belean.pl", "admin@belean.pl")   # certificate false
-    # x = autodiscover("bigpond.net.au", "admin@bigpond.net.au")   # autodiscover all fail
-    # x = autodiscover("huxcomm.net", "admin@huxcomm.net")  # no srv
-
-    # x = config_from_redirect("https://autoconfig-ssl.mail.hostpoint.ch/autodiscover/autodiscover.xml", "ametiq.com", 5)
+    x = autodiscover("example.com", "admni@example.com")  #need to redirect in xml
     json_string = json.dumps(x, indent=4, default=lambda obj: obj.__dict__)
     print(json_string)
