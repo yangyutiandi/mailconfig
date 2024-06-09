@@ -62,6 +62,8 @@ def resolve_srv(query_name):
     answers = query_dns(query_name, 'SRV')
     data = {}
     cur = []
+    if len(answers) == 0:
+        return data
     for rdata in answers:
         entry = {
             "hostname": ".".join(
@@ -86,7 +88,7 @@ def srv(domain):
     Constructs a SRV record for the given domain, and returns a dictionary of the results.
     '''
     data = {}
-    data["autoconfig"] = resolve_srv(f"_autoconfig._tcp.{domain}")
+    #data["autoconfig"] = resolve_srv(f"_autoconfig._tcp.{domain}")
     data["imaps"] = resolve_srv(f"_imaps._tcp.{domain}")
     data["imap"] = resolve_srv(f"_imap._tcp.{domain}")
     data["pop3s"] = resolve_srv(f"_pop3s._tcp.{domain}")
@@ -98,8 +100,6 @@ def srv(domain):
 
 if __name__ == "__main__":
     import json
-    # x = srv("op.pl")
-    # x = srv('pobox.com')
-    x = resolve_mx("pobox.com")
+    x = srv('pobox.com')
     json_string = json.dumps(x, indent=4, default=lambda obj: obj.__dict__)
     print(json_string)

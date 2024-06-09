@@ -4,6 +4,7 @@ from autoconfig import autoconfig
 from autodiscover import autodiscover
 from srv import srv
 from buildin import buildin
+from verify import param_check
 
 SCAN_AUTOCONFIG = 1
 SCAN_AUTODISCOVER = 2
@@ -27,8 +28,9 @@ def doscan(mailaddress, domain, flag):
         print("looking up the buildin list")
         data["buildin"] = buildin(domain)
     print("done")
-    json_string = json.dumps(data, indent=4, default=lambda obj: obj.__dict__)
-    print(json_string)
+    return data
+    # json_string = json.dumps(data, indent=4, default=lambda obj: obj.__dict__)
+
 
 def main():
 
@@ -64,7 +66,13 @@ def main():
         flag = SCAN_ALL
 
     # print(flag)
-    doscan(args.mailaddress, domain, flag)
+    result = doscan(args.mailaddress, domain, flag)
+    json_string = json.dumps(result, indent=4, default=lambda obj: obj.__dict__)
+    print(json_string)
+    tree = param_check(result)
+    json_string = json.dumps(tree, indent=4, default=lambda obj: obj.__dict__)
+    print(json_string)
+
 
 
 if __name__ == "__main__":

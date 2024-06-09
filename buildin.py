@@ -61,8 +61,6 @@ def buildin(domain):
 
 if __name__ == "__main__":
 
-    # x = buildin('bigpond.net.au')
-    # x = buildin("gmail.com")
-    x = buildin("pobox.com")
+    x = buildin("onet.pl")
     json_string = json.dumps(x, indent=4, default=lambda obj: obj.__dict__)
     print(json_string)

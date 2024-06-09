@@ -1,0 +1,228 @@
+{
+    "autoconfig": {
+        "autoconfig-url": {
+            "http_get": {
+                "error": "status code: 404, Not Found"
+            },
+            "https_get": {
+                "verified": false,
+                "error": "status code: 404, Not Found"
+            }
+        },
+        "well-known-url": {
+            "http_get": {
+                "error": "status code: 404, Not Found"
+            },
+            "https_get": {
+                "verified": true,
+                "error": "status code: 404, Not Found"
+            }
+        },
+        "ISPDB": {
+            "verified": true,
+            "error": "status code: 404, Not Found"
+        },
+        "Back-off": {
+            "MX": "zimbra.ametiqconnect.com",
+            "register domain": {
+                "register domain": "ametiqconnect.com",
+                "https_get": {
+                    "error": "Connection Error"
+                },
+                "ISPDB": {
+                    "verified": true,
+                    "error": "status code: 404, Not Found"
+                },
+                "parent domain": "parent domain is same as the register domain"
+            }
+        }
+    },
+    "autodiscover": {
+        "autodis-origin": {
+            "http_get": {
+                "error": "status code: 404, Not Found"
+            },
+            "http_post": {
+                "error": "status code: 404, Not Found"
+            },
+            "https_get": {
+                "verified": true,
+                "error": "status code: 404, Not Found"
+            },
+            "https_post": {
+                "verified": true,
+                "error": "status code: 404, Not Found"
+            }
+        },
+        "autodis-prefix": {
+            "http_get": {
+                "config": {
+                    "incomingServers": [
+                        {
+                            "type": "IMAP",
+                            "server": "imap.mail.hostpoint.ch",
+                            "port": "143",
+                            "ssl": "on",
+                            "encryption": "TLS",
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "off"
+                        }
+                    ],
+                    "outgoingServers": [
+                        {
+                            "type": "SMTP",
+                            "server": "asmtp.mail.hostpoint.ch",
+                            "port": "587",
+                            "ssl": "on",
+                            "encryption": "TLS",
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "off"
+                        }
+                    ],
+                    "webmails": []
+                },
+                "verified": true,
+                "redirect_path": [
+                    [
+                        "https://autoconfig-ssl.mail.hostpoint.ch/autodiscover/autodiscover.xml",
+                        "admni@ametiq.com"
+                    ]
+                ],
+                "redirect_xml": "success"
+            },
+            "http_post": {
+                "config": {
+                    "incomingServers": [
+                        {
+                            "type": "IMAP",
+                            "server": "imap.mail.hostpoint.ch",
+                            "port": "143",
+                            "ssl": "on",
+                            "encryption": "TLS",
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "off"
+                        }
+                    ],
+                    "outgoingServers": [
+                        {
+                            "type": "SMTP",
+                            "server": "asmtp.mail.hostpoint.ch",
+                            "port": "587",
+                            "ssl": "on",
+                            "encryption": "TLS",
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "off"
+                        }
+                    ],
+                    "webmails": []
+                },
+                "verified": true,
+                "redirect_path": [
+                    [
+                        "https://autoconfig-ssl.mail.hostpoint.ch/autodiscover/autodiscover.xml",
+                        "admni@ametiq.com"
+                    ]
+                ],
+                "redirect_xml": "success"
+            },
+            "https_get": {
+                "verified": true,
+                "config": {
+                    "incomingServers": [
+                        {
+                            "type": "IMAP",
+                            "server": "imap.mail.hostpoint.ch",
+                            "port": "143",
+                            "ssl": "on",
+                            "encryption": "TLS",
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "off"
+                        }
+                    ],
+                    "outgoingServers": [
+                        {
+                            "type": "SMTP",
+                            "server": "asmtp.mail.hostpoint.ch",
+                            "port": "587",
+                            "ssl": "on",
+                            "encryption": "TLS",
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "off"
+                        }
+                    ],
+                    "webmails": []
+                },
+                "redirect_path": [
+                    [
+                        "https://autoconfig-ssl.mail.hostpoint.ch/autodiscover/autodiscover.xml",
+                        "admni@ametiq.com"
+                    ]
+                ],
+                "redirect_xml": "success"
+            },
+            "https_post": {
+                "verified": true,
+                "config": {
+                    "incomingServers": [
+                        {
+                            "type": "IMAP",
+                            "server": "imap.mail.hostpoint.ch",
+                            "port": "143",
+                            "ssl": "on",
+                            "encryption": "TLS",
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "off"
+                        }
+                    ],
+                    "outgoingServers": [
+                        {
+                            "type": "SMTP",
+                            "server": "asmtp.mail.hostpoint.ch",
+                            "port": "587",
+                            "ssl": "on",
+                            "encryption": "TLS",
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "off"
+                        }
+                    ],
+                    "webmails": []
+                },
+                "redirect_path": [
+                    [
+                        "https://autoconfig-ssl.mail.hostpoint.ch/autodiscover/autodiscover.xml",
+                        "admni@ametiq.com"
+                    ]
+                ],
+                "redirect_xml": "success"
+            }
+        },
+        "autodis-redirect": {},
+        "autodis-srv": {
+            "error": "No SRV record"
+        }
+    },
+    "srv": {
+        "imaps": {},
+        "imap": {},
+        "pop3s": {},
+        "pop3": {},
+        "submissions": {},
+        "submission": {}
+    },
+    "buildin": {
+        "warning": [],
+        "mailcore": [],
+        "mailspring": [],
+        "nodemailer": [],
+        "DeltaChat": [],
+        "FairEmail": []
+    }
+}

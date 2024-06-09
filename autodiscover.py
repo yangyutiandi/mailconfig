@@ -188,6 +188,7 @@ def autodiscover(domain, mailaddress):
                 cur.update(config_from_redirect(cur["config"]["redirectUrl"], mailaddress))
             elif "redirectAddr" in cur["config"]:
                 cur.update(config_from_redirect(url, cur["config"]["redirectAddr"]))
+            del cur['xml']
         data[alias]["http_get"] = cur
 
         cur = http_post(url, mailaddress)
@@ -197,6 +198,7 @@ def autodiscover(domain, mailaddress):
                 cur.update(config_from_redirect(cur["config"]["redirectUrl"], mailaddress))
             elif "redirectAddr" in cur["config"]:
                 cur.update(config_from_redirect(url, cur["config"]["redirectAddr"]))
+            del cur['xml']
         data[alias]["http_post"] = cur
 
         # upgrade to https
@@ -208,6 +210,7 @@ def autodiscover(domain, mailaddress):
                 cur.update(config_from_redirect(cur["config"]["redirectUrl"], mailaddress))
             elif "redirectAddr" in cur["config"]:
                 cur.update(config_from_redirect(url, cur["config"]["redirectAddr"]))
+            del cur['xml']
         data[alias]["https_get"] = cur
 
         cur = https_post(url,mailaddress)
@@ -217,17 +220,19 @@ def autodiscover(domain, mailaddress):
                 cur.update(config_from_redirect(cur["config"]["redirectUrl"], mailaddress))
             elif "redirectAddr" in cur["config"]:
                 cur.update(config_from_redirect(url, cur["config"]["redirectAddr"]))
+            del cur['xml']
         data[alias]["https_post"] = cur
     
     # Step 3
     url3 = f"http://autodiscover.{domain}/autodiscover/autodiscover.xml"  # Must redirect to https and also prompt the user.
     cur = get_redirect_post(url3, mailaddress)
-    if cur  and"xml" in cur:
+    if "xml" in cur:
         cur["config"] = parse_autodiscover(cur["xml"])
         if "redirectUrl" in cur["config"]:
             cur.update(config_from_redirect(cur["config"]["redirectUrl"], mailaddress))
         elif "redirectAddr" in cur["config"]:
             cur.update(config_from_redirect(url3, cur["config"]["redirectAddr"]))
+        del cur['xml']
     data['autodis-redirect'] = cur
 
     # Step 4, autodiscover-v2
@@ -260,6 +265,7 @@ def autodiscover(domain, mailaddress):
                 cur.update(config_from_redirect(cur["config"]["redirectUrl"], mailaddress))
             elif "redirectAddr" in cur["config"]:
                 cur.update(config_from_redirect(url_from_srv, cur["config"]["redirectAddr"]))
+            del cur['xml']
         data['autodis-srv'] = cur
     else:
         data['autodis-srv']['error'] =  'No SRV record'
@@ -270,6 +276,6 @@ def autodiscover(domain, mailaddress):
 if __name__=="__main__":
     import json
 
-    x = autodiscover("example.com", "admni@example.com")  #need to redirect in xml
+    x = autodiscover("soverin.net", "admni@soverin.net") # have srv
     json_string = json.dumps(x, indent=4, default=lambda obj: obj.__dict__)
     print(json_string)

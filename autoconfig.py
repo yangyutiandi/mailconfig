@@ -93,7 +93,7 @@ def parse_autoconfig(content):
             }
             webmail_data.append(xml_data)
 
-    data = [{"incomingServers": incoming_server_data, "outgoingServers": outgoing_server_data, "webMails": webmail_data}]
+    data = {"incomingServers": incoming_server_data, "outgoingServers": outgoing_server_data, "webMails": webmail_data}
     return data
 
 def from_ISPDB(domain):
@@ -101,6 +101,7 @@ def from_ISPDB(domain):
     cur = https_get(url3)
     if "xml" in cur:
         cur["config"] = parse_autoconfig(cur["xml"])
+        del cur['xml']
     return cur
 
 def autoconfig(domain, mailaddress):
@@ -123,12 +124,14 @@ def autoconfig(domain, mailaddress):
         cur = http_get(url)
         if "xml" in cur:
             cur["config"] = parse_autoconfig(cur["xml"])
+            del cur['xml']
         data[alias]["http_get"] = cur
         # upgrade to https
         url = url.replace("http://", "https://")
         cur = https_get(url)
         if "xml" in cur:
             cur["config"] = parse_autoconfig(cur["xml"])
+            del cur['xml']
         data[alias]["https_get"] = cur
 
     # step 3, we lookup the autoconfig file from thunderbird ISPDB
@@ -140,47 +143,47 @@ def autoconfig(domain, mailaddress):
         return data
 
     domain = mxlist[0]["hostname"]
-    data["MX"] = domain
+    backoff = {}
+    data["Back-off"] = backoff
+    backoff["MX"] = domain
     regdomain  = tldextract.extract(domain).registered_domain
     if not regdomain:   #we can't get the register domain
         return data
 
     # step 5 lookup the autoconfig file from reg domain
-    data["register domain"] = {}
-    data["register domain"]["register domain"] = regdomain
+    backoff["register domain"] = {}
+    backoff["register domain"]["register domain"] = regdomain
     url3 = f"https://autoconfig.{regdomain}/mail/config-v1.1.xml?emailaddress={mailaddress}"
     cur = https_get(url3)
     if "xml" in cur:
         cur["config"] = parse_autoconfig(cur["xml"])
-    data["register domain"]["https_get"] = cur
-    data["register domain"]["ISPDB"] = from_ISPDB(regdomain)
+        del cur['xml']
+    backoff["register domain"]["https_get"] = cur
+    backoff["register domain"]["ISPDB"] = from_ISPDB(regdomain)
 
     if regdomain == domain: #domain is register domain
         return data
+
     parent_domain = ".".join(domain.split(".")[1:])
+    if parent_domain == regdomain:
+        backoff["register domain"]["parent domain"] = "parent domain is same as the register domain"
+        return data
 
     # step 6 lookup the autoconfig file from parent domain
-    data["parent domain"] = {}
-    data["parent domain"]["parent domain"] = parent_domain
-    if parent_domain != regdomain:
-        url4 = f"https://autoconfig.{parent_domain}/mail/config-v1.1.xml?emailaddress={mailaddress}"
-        cur = https_get(url4)
-        if "xml" in cur:
-            cur["config"] = parse_autoconfig(cur["xml"])
-        data["parent domain"]["https_get"] = cur
-        data["parent domain"]["ISPDB"] = from_ISPDB(regdomain)
-    else:
-        data["parent domain"]["info"] = "parent domain is same as the register domain"
+    backoff["parent domain"] = {}
+    backoff["parent domain"]["parent domain"] = parent_domain
+    url4 = f"https://autoconfig.{parent_domain}/mail/config-v1.1.xml?emailaddress={mailaddress}"
+    cur = https_get(url4)
+    if "xml" in cur:
+        cur["config"] = parse_autoconfig(cur["xml"])
+        del cur['xml']
+    backoff["parent domain"]["https_get"] = cur
+    backoff["parent domain"]["ISPDB"] = from_ISPDB(regdomain)
     return data
 
 if __name__ == "__main__":
     import json
 
-    # x = autoconfig('wavenetworks.com', "admin@wavenetworks.com")
-    x = autoconfig('bigpond.net.au', "admin@bigpond.net.au")    #inconsitant between thunderbird and origin
+    x = autoconfig('gmail.com', "admin@gmail.com")
     json_string = json.dumps(x, indent=4, default=lambda obj: obj.__dict__)
     print(json_string)
-    # ex = tldextract.extract("co.uk")
-    # print(ex)
-    # cur = ex.registered_domain
-    # print(cur)

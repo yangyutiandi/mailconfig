@@ -181,10 +181,10 @@ def get_redirect_post(url, mailaddress):
             return re
         else:
             # there is no redict
-            return None
+            return {}
     except Exception as e:
         # this error is no need to care about,means no redict
-        return None
+        return {}
 
 
 if __name__ == "__main__":
