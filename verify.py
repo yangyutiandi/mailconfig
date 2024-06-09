@@ -115,14 +115,14 @@ def autodiscover_socket(item):
         elif encryption == 'tls':
             return 'starttls'
         elif encryption == 'auto':
-            # 针对 auto 的处理有待商榷，可单独处理，特例分析；
+            #TODO: process auto
             return guess(port)
         else:   #not a valid param
             return None
     elif ssl :
         if ssl == 'on':
-            # 此处参考雷鸟的处理，根据端口号决定连接类型
-            return guess(port, "ssl")  # 此处参考 outlook，默认采用加密
+            # thunderbird and outlook
+            return guess(port, "ssl")
         elif ssl == 'off':
             return 'plain'
         else:   #not a valid param
