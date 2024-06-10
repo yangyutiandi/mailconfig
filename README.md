@@ -9,6 +9,7 @@ The./buildinraw contains source files for some build-in lists extracted from som
 The./Autoconfig contains domain names in the form of auto-config.[eTLD]. This file maps all possible auto-config.[eTLD] domains to be resolved as 127.0.0.1 to keep credentials from leaking outside of your network. Refer to the mitigation method provided by [Autodiscovering the Great Leak](https://www.akamai.com/blog/security/autodiscovering-the-great-leak).
 
 The verify.py can check the legality and consistency of configuration parameters obtained through different channels.
+The testconnect.py can check if the server can be connected and obtain its configuration information. At the same time, it is possible to check whether the server supports more secure connections.
 
 About:
 
