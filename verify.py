@@ -139,14 +139,13 @@ def invalid_add(tree, item, info=""):
 def valid_add(tree, list, info):
     # list = [type, hostname, port, socket_type_info]
     now = tree
-    for i in range(len(list)-1):
+    for i in range(len(list)):
         if list[i] not in now:
             now[list[i]] = {}
         now = now[list[i]]
-    socket_type = list[-1]
-    if socket_type not in now:
-        now[socket_type] = []
-    now[socket_type].append(info)
+    if "other_info" not in now:
+        now["other_info"] = []
+    now["other_info"].append(info)
 
 # need to check none
 def autoconfig_param_check(configs, tree):
@@ -188,7 +187,7 @@ def autodiscover_param_check(configs, tree):    #type in autodiscover does not n
 def srv_param_check(configs, tree):
     for item in configs:
         if not (1<= item["port"] <= 65535) or not check_domain(item["hostname"]):
-            invalid_add(tree, item, f'{item["server"]}:{item["port"]}, hostname and port error')
+            invalid_add(tree, item, f'{item["hostname"]}:{item["port"]}, hostname and port error')
             continue
         valid_add(tree, [item["type"].lower(), item["hostname"], str(item["port"]), item["socketType"]], item["config_info"])
 

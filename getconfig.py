@@ -5,6 +5,7 @@ from autodiscover import autodiscover
 from srv import srv
 from buildin import buildin
 from verify import param_check
+from testconnect import testconnect
 
 SCAN_AUTOCONFIG = 1
 SCAN_AUTODISCOVER = 2
@@ -72,7 +73,9 @@ def main():
     tree = param_check(result)
     json_string = json.dumps(tree, indent=4, default=lambda obj: obj.__dict__)
     print(json_string)
-
+    testconnect(tree)
+    json_string = json.dumps(tree, indent=4, default=lambda obj: obj.__dict__)
+    print(json_string)
 
 
 if __name__ == "__main__":
