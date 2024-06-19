@@ -1,4 +1,4 @@
-# Email Autoconfiguration Test Tool (Still building🔨)
+# Email Autoconfiguration Test Tool (Still refining🔨)
 
 Get all accessible configuration files from Autodiscover, Autoconfig, DNS SRV (RFC 6186/8314), and some built-in lists from mail clients.
 
