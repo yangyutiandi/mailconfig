@@ -16,7 +16,7 @@ def guess(port, default = "plain"):
         return 'starttls'
     return default
 
-def config_flat(item, info_dict):
+def config_flat(item, info_dict, priority = False):
     info = {}
     for key in item:
         if key != "config":
@@ -25,50 +25,83 @@ def config_flat(item, info_dict):
     config = item["config"]
     configlist = []
     if "incomingServers" in config:
-        configlist+= config["incomingServers"]
+        if priority:
+            configlist+= config["incomingServers"][0:1]
+        else:
+            configlist += config["incomingServers"]
     if "outgoingServers" in config:
-        configlist += config["outgoingServers"]
+        if priority:
+            configlist += config["outgoingServers"][0:1]
+        else:
+            configlist += config["outgoingServers"]
     for i in range(len(configlist)):
         configlist[i]["config_info"] = info
     return  configlist
 
-def flat_autoconfig(data):
+def flat_autoconfig(data, priority = False):
     url_pool = ["autoconfig-url", "well-known-url"]
     http_method = ["http_get", "https_get"]
     relist = []
     for url in url_pool:
         for method in http_method:
             if "config" in data[url][method]:
-                relist += config_flat(data[url][method], {"orign" : url+":"+method })
+                relist += config_flat(data[url][method], {"orign" : url+":"+method }, priority)
 
     if "config" in data["ISPDB"]:
-        relist += config_flat(data["ISPDB"], {"orign" : "ISPDB"})
+        relist += config_flat(data["ISPDB"], {"orign" : "ISPDB"}, priority)
+    if "Back-off" not in data:  #sometimes Back-off not in data
+        return relist
     back_off = data["Back-off"]
     domain_pool = ["register domain", "parent domain"]
     for each in domain_pool:
         if each in back_off:    #have this domain item
             cur = back_off[each]
             if "config" in cur["https_get"]:
-                relist += config_flat(cur["https_get"], {"orign": each +":https_get" , each: cur[each] })
+                relist += config_flat(cur["https_get"], {"orign": each +":https_get" , each: cur[each] }, priority)
             if "config" in cur["ISPDB"]:
-                relist += config_flat(cur["ISPDB"], {"orign": each + ":ISPDB", each: cur[each]})
+                relist += config_flat(cur["ISPDB"], {"orign": each + ":ISPDB", each: cur[each]}, priority)
     # print(relist, len(relist))
     return  relist
 
-def flat_autodiscover(data):
+def flat_autodiscover(data, priority = False):
     url_pool = ["autodis-origin", "autodis-prefix"]
     http_method = ["http_get", "https_get", "http_post", "https_post"]
     relist = []
     for url in url_pool:
         for method in http_method:
             if "config" in data[url][method]:
-                relist += config_flat(data[url][method], {"orign" : url+":"+method })
+                relist += config_flat(data[url][method], {"orign" : url+":"+method }, priority)
     if "config" in data["autodis-redirect"]:
-        relist += config_flat(data["autodis-redirect"], {"orign": "autodis-redirect"})
+        relist += config_flat(data["autodis-redirect"], {"orign": "autodis-redirect"}, priority)
     if "config" in data["autodis-srv"]:
-        relist += config_flat(data["autodis-srv"], {"orign": "autodis-srv"})
+        relist += config_flat(data["autodis-srv"], {"orign": "autodis-srv"}, priority)
     # print(relist, len(relist))
     return relist
+
+def flat_srv(data, priority = False):
+    relist = []
+    for key, item in data.items():
+        if item:
+            info = {"orign": "srv:" + key, "is_dnssec": item["is_dnssec"]}
+            for config in item["srv_record"]:
+                socketType = "starttls"
+                type = key
+                if key[-1] == "s":
+                    socketType = "ssl"
+                    type = type[:-1]
+                cur = {"type": type, "hostname": config["hostname"], "port": config["port"], "socketType": socketType,
+                       "config_info": info}
+                relist.append(cur)
+                if priority:
+                    break
+    return relist
+
+def form_type(type):
+    if(type == "pop"):
+        return "pop3"
+    if(type == "imap4"):
+        return "imap"
+    return type
 
 def check_type(type):
     if type in proto_type:
@@ -108,6 +141,7 @@ def autodiscover_socket(item):
     port = int(item["port"])    #port have verified
 
     if encryption:
+        encryption = encryption.lower()
         if encryption == 'none':
             return 'plain'
         elif encryption == 'ssl':
@@ -163,7 +197,7 @@ def autoconfig_param_check(configs, tree):
         info = item["config_info"].copy()
         if item["authentication"] is not None:
             info["authentication"] = item["authentication"]
-        valid_add(tree, [item["type"].lower(), item["hostname"], item["port"], socket_type], info)
+        valid_add(tree, [form_type(item["type"].lower()), item["hostname"], item["port"], socket_type], info) #type in autoconfig may have pop, imap4
 
 def autodiscover_process(configs):  #erery item in autodiscover have some other info
     param_pool = ["spa", "ttl", "domainrequired"]
@@ -191,28 +225,17 @@ def srv_param_check(configs, tree):
             continue
         valid_add(tree, [item["type"].lower(), item["hostname"], str(item["port"]), item["socketType"]], item["config_info"])
 
-def autoconfig_check(data, tree):
-    res = flat_autoconfig(data)
+def autoconfig_check(data, tree, priority = False):
+    res = flat_autoconfig(data, priority)
     autoconfig_param_check(res, tree)
 
-def autodiscover_check(data, tree):
-    res = flat_autodiscover(data)
+def autodiscover_check(data, tree, priority = False):
+    res = flat_autodiscover(data, priority)
     autodiscover_process(res)
     autodiscover_param_check(res, tree)
 
-def srv_check(data, tree):
-    res = []
-    for key, item in data.items():
-        if item:
-            info = {"orign" : "srv:" + key, "is_dnssec" : item["is_dnssec"]}
-            for config in item["srv_record"]:
-                socketType = "starttls"
-                type = key
-                if key[-1] == "s":
-                    type = type[:-1]
-                    socketType = "ssl"
-                cur = {"type" : type, "hostname" : config["hostname"], "port" : config["port"], "socketType" : socketType, "config_info": info}
-                res.append(cur)
+def srv_check(data, tree, priority = False):
+    res = flat_srv(data, priority)
     srv_param_check(res, tree)
 
 def buildin_check(data, tree):
@@ -230,14 +253,14 @@ def buildin_check(data, tree):
     autoconfig_param_check(res, tree)
 
 
-def param_check(data):
+def param_check(data, priority = False):
     tree = {}
     if "autoconfig" in data:
-        autoconfig_check(data["autoconfig"], tree)
+        autoconfig_check(data["autoconfig"], tree, priority)
     if "autodiscover" in data:
-        autodiscover_check(data["autodiscover"], tree)
+        autodiscover_check(data["autodiscover"], tree, priority)
     if "srv" in data:
-        srv_check(data["srv"], tree)
+        srv_check(data["srv"], tree, priority)
     if "buildin" in data:
         buildin_check(data["buildin"], tree)
     return tree
@@ -245,10 +268,13 @@ def param_check(data):
 if __name__=="__main__":
     import json
 
-    f = open("data.json", 'r')
+    f = open("data1.json", 'r')
     item = f.read()
     f.close()
     datadict = json.loads(item)
     x = param_check(datadict)
+    json_string = json.dumps(x, indent=4, default=lambda obj: obj.__dict__)
+    print(json_string)
+    x = param_check(datadict, True)
     json_string = json.dumps(x, indent=4, default=lambda obj: obj.__dict__)
     print(json_string)

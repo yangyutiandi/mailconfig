@@ -31,21 +31,17 @@ def buildin(domain):
             data["warning"].append(f"file {key}.txt not found" )
             continue
         f = open(f"{filepath}/{key}.txt",'r')
-        jlist = f.read()
+        jlist = f.read().split('\n')[0:-1]
         f.close()
-        jlist = jlist.split('\n')
         relist = []
         for item in jlist:
-            try:
-                item = json.loads(item)
-            except:
-                continue
+            item = json.loads(item)
             if "domain" not in item or key not in item:
                 continue
             match = False
             if matchs:
-                matchs = getkeylist(matchs, item)
-                for restring in matchs:
+                matcher = getkeylist(matchs, item)
+                for restring in matcher:
                     reinfo = re.match(restring, domain)
                     if reinfo and reinfo.group() == domain:  #the regex must fully match the domain
                         match = True
@@ -61,6 +57,9 @@ def buildin(domain):
 
 if __name__ == "__main__":
 
-    x = buildin("onet.pl")
+    # x = buildin('bigpond.net.au')
+    # x = buildin("gmail.com")
+    # x = buildin("mx1.comcast.net")
+    x = buildin("ymail.com")
     json_string = json.dumps(x, indent=4, default=lambda obj: obj.__dict__)
     print(json_string)
