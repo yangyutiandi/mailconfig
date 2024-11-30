@@ -14,3 +14,6 @@ The testconnect.py can check if the server can be connected and obtain its confi
 About:
 
 [1] eTLD can be found in the [Public Suffix List](https://publicsuffix.org/list/public_suffix_list.dat). 
+
+
+**PS: this project now is maintaining at https://github.com/emailconfigtest/mailconfig**
