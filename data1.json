@@ -1,0 +1,725 @@
+{
+    "autoconfig": {
+        "autoconfig-url": {
+            "http_get": {
+                "config": {
+                    "incomingServers": [
+                        {
+                            "type": "imap",
+                            "hostname": "imap.poczta.onet.pl",
+                            "port": "993",
+                            "socketType": "SSL",
+                            "authentication": "password-cleartext"
+                        },
+                        {
+                            "type": "pop3",
+                            "hostname": "pop3.poczta.onet.pl",
+                            "port": "995",
+                            "socketType": "SSL",
+                            "authentication": "password-cleartext"
+                        }
+                    ],
+                    "outgoingServers": [
+                        {
+                            "type": "smtp",
+                            "hostname": "smtp.poczta.onet.pl",
+                            "port": "465",
+                            "socketType": "SSL",
+                            "authentication": "password-cleartext"
+                        },
+                        {
+                            "type": "smtp",
+                            "hostname": "smtp.poczta.onet.pl",
+                            "port": "587",
+                            "socketType": "STARTTLS",
+                            "authentication": "password-cleartext"
+                        }
+                    ],
+                    "webMails": []
+                }
+            },
+            "https_get": {
+                "verified": true,
+                "config": {
+                    "incomingServers": [
+                        {
+                            "type": "imap",
+                            "hostname": "imap.poczta.onet.pl",
+                            "port": "993",
+                            "socketType": "SSL",
+                            "authentication": "password-cleartext"
+                        },
+                        {
+                            "type": "pop3",
+                            "hostname": "pop3.poczta.onet.pl",
+                            "port": "995",
+                            "socketType": "SSL",
+                            "authentication": "password-cleartext"
+                        }
+                    ],
+                    "outgoingServers": [
+                        {
+                            "type": "smtp",
+                            "hostname": "smtp.poczta.onet.pl",
+                            "port": "465",
+                            "socketType": "SSL",
+                            "authentication": "password-cleartext"
+                        },
+                        {
+                            "type": "smtp",
+                            "hostname": "smtp.poczta.onet.pl",
+                            "port": "587",
+                            "socketType": "STARTTLS",
+                            "authentication": "password-cleartext"
+                        }
+                    ],
+                    "webMails": []
+                }
+            }
+        },
+        "well-known-url": {
+            "http_get": {
+                "error": "status code: 404, Not Found"
+            },
+            "https_get": {
+                "verified": true,
+                "error": "status code: 404, Not Found"
+            }
+        },
+        "ISPDB": {
+            "verified": true,
+            "config": {
+                "incomingServers": [
+                    {
+                        "type": "imap",
+                        "hostname": "imap.poczta.onet.pl",
+                        "port": "993",
+                        "socketType": "SSL",
+                        "authentication": "password-cleartext"
+                    },
+                    {
+                        "type": "pop3",
+                        "hostname": "pop3.poczta.onet.pl",
+                        "port": "995",
+                        "socketType": "SSL",
+                        "authentication": "password-cleartext"
+                    }
+                ],
+                "outgoingServers": [
+                    {
+                        "type": "smtp",
+                        "hostname": "smtp.poczta.onet.pl",
+                        "port": "465",
+                        "socketType": "SSL",
+                        "authentication": "password-cleartext"
+                    },
+                    {
+                        "type": "smtp",
+                        "hostname": "smtp.poczta.onet.pl",
+                        "port": "587",
+                        "socketType": "STARTTLS",
+                        "authentication": "password-cleartext"
+                    }
+                ],
+                "webMails": []
+            }
+        },
+        "Back-off": {
+            "MX": "mx.poczta.onet.pl",
+            "register domain": {
+                "register domain": "onet.pl",
+                "https_get": {
+                    "verified": true,
+                    "config": {
+                        "incomingServers": [
+                            {
+                                "type": "imap",
+                                "hostname": "imap.poczta.onet.pl",
+                                "port": "993",
+                                "socketType": "SSL",
+                                "authentication": "password-cleartext"
+                            },
+                            {
+                                "type": "pop3",
+                                "hostname": "pop3.poczta.onet.pl",
+                                "port": "995",
+                                "socketType": "SSL",
+                                "authentication": "password-cleartext"
+                            }
+                        ],
+                        "outgoingServers": [
+                            {
+                                "type": "smtp",
+                                "hostname": "smtp.poczta.onet.pl",
+                                "port": "465",
+                                "socketType": "SSL",
+                                "authentication": "password-cleartext"
+                            },
+                            {
+                                "type": "smtp",
+                                "hostname": "smtp.poczta.onet.pl",
+                                "port": "587",
+                                "socketType": "STARTTLS",
+                                "authentication": "password-cleartext"
+                            }
+                        ],
+                        "webMails": []
+                    }
+                },
+                "ISPDB": {
+                    "verified": true,
+                    "config": {
+                        "incomingServers": [
+                            {
+                                "type": "imap",
+                                "hostname": "imap.poczta.onet.pl",
+                                "port": "993",
+                                "socketType": "SSL",
+                                "authentication": "password-cleartext"
+                            },
+                            {
+                                "type": "pop3",
+                                "hostname": "pop3.poczta.onet.pl",
+                                "port": "995",
+                                "socketType": "SSL",
+                                "authentication": "password-cleartext"
+                            }
+                        ],
+                        "outgoingServers": [
+                            {
+                                "type": "smtp",
+                                "hostname": "smtp.poczta.onet.pl",
+                                "port": "465",
+                                "socketType": "SSL",
+                                "authentication": "password-cleartext"
+                            },
+                            {
+                                "type": "smtp",
+                                "hostname": "smtp.poczta.onet.pl",
+                                "port": "587",
+                                "socketType": "STARTTLS",
+                                "authentication": "password-cleartext"
+                            }
+                        ],
+                        "webMails": []
+                    }
+                }
+            },
+            "parent domain": {
+                "parent domain": "poczta.onet.pl",
+                "https_get": {
+                    "verified": true,
+                    "config": {
+                        "incomingServers": [
+                            {
+                                "type": "imap",
+                                "hostname": "imap.poczta.onet.pl",
+                                "port": "993",
+                                "socketType": "SSL",
+                                "authentication": "password-cleartext"
+                            },
+                            {
+                                "type": "pop3",
+                                "hostname": "pop3.poczta.onet.pl",
+                                "port": "995",
+                                "socketType": "SSL",
+                                "authentication": "password-cleartext"
+                            }
+                        ],
+                        "outgoingServers": [
+                            {
+                                "type": "smtp",
+                                "hostname": "smtp.poczta.onet.pl",
+                                "port": "465",
+                                "socketType": "SSL",
+                                "authentication": "password-cleartext"
+                            },
+                            {
+                                "type": "smtp",
+                                "hostname": "smtp.poczta.onet.pl",
+                                "port": "587",
+                                "socketType": "STARTTLS",
+                                "authentication": "password-cleartext"
+                            }
+                        ],
+                        "webMails": []
+                    }
+                },
+                "ISPDB": {
+                    "verified": true,
+                    "config": {
+                        "incomingServers": [
+                            {
+                                "type": "imap",
+                                "hostname": "imap.poczta.onet.pl",
+                                "port": "993",
+                                "socketType": "SSL",
+                                "authentication": "password-cleartext"
+                            },
+                            {
+                                "type": "pop3",
+                                "hostname": "pop3.poczta.onet.pl",
+                                "port": "995",
+                                "socketType": "SSL",
+                                "authentication": "password-cleartext"
+                            }
+                        ],
+                        "outgoingServers": [
+                            {
+                                "type": "smtp",
+                                "hostname": "smtp.poczta.onet.pl",
+                                "port": "465",
+                                "socketType": "SSL",
+                                "authentication": "password-cleartext"
+                            },
+                            {
+                                "type": "smtp",
+                                "hostname": "smtp.poczta.onet.pl",
+                                "port": "587",
+                                "socketType": "STARTTLS",
+                                "authentication": "password-cleartext"
+                            }
+                        ],
+                        "webMails": []
+                    }
+                }
+            }
+        }
+    },
+    "autodiscover": {
+        "autodis-origin": {
+            "http_get": {
+                "redirect": {
+                    "http://onet.pl/autodiscover/autodiscover.xml": 301,
+                    "https://poczta.onet.pl/Autodiscover/Autodiscover.xml": 200
+                },
+                "config": {
+                    "incomingServers": [
+                        {
+                            "type": "IMAP",
+                            "server": "imap.poczta.onet.pl",
+                            "port": "993",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        },
+                        {
+                            "type": "POP3",
+                            "server": "pop3.poczta.onet.pl",
+                            "port": "995",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        }
+                    ],
+                    "outgoingServers": [
+                        {
+                            "type": "SMTP",
+                            "server": "smtp.poczta.onet.pl",
+                            "port": "465",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        }
+                    ],
+                    "webmails": []
+                }
+            },
+            "http_post": {
+                "redirect": {
+                    "http://onet.pl/autodiscover/autodiscover.xml": 301,
+                    "https://poczta.onet.pl/Autodiscover/Autodiscover.xml": 200
+                },
+                "config": {
+                    "incomingServers": [
+                        {
+                            "type": "IMAP",
+                            "server": "imap.poczta.onet.pl",
+                            "port": "993",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        },
+                        {
+                            "type": "POP3",
+                            "server": "pop3.poczta.onet.pl",
+                            "port": "995",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        }
+                    ],
+                    "outgoingServers": [
+                        {
+                            "type": "SMTP",
+                            "server": "smtp.poczta.onet.pl",
+                            "port": "465",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        }
+                    ],
+                    "webmails": []
+                }
+            },
+            "https_get": {
+                "verified": true,
+                "redirect": {
+                    "https://onet.pl/autodiscover/autodiscover.xml": 301,
+                    "https://poczta.onet.pl/Autodiscover/Autodiscover.xml": 200
+                },
+                "config": {
+                    "incomingServers": [
+                        {
+                            "type": "IMAP",
+                            "server": "imap.poczta.onet.pl",
+                            "port": "993",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        },
+                        {
+                            "type": "POP3",
+                            "server": "pop3.poczta.onet.pl",
+                            "port": "995",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        }
+                    ],
+                    "outgoingServers": [
+                        {
+                            "type": "SMTP",
+                            "server": "smtp.poczta.onet.pl",
+                            "port": "465",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        }
+                    ],
+                    "webmails": []
+                }
+            },
+            "https_post": {
+                "verified": true,
+                "redirect": {
+                    "https://onet.pl/autodiscover/autodiscover.xml": 301,
+                    "https://poczta.onet.pl/Autodiscover/Autodiscover.xml": 200
+                },
+                "config": {
+                    "incomingServers": [
+                        {
+                            "type": "IMAP",
+                            "server": "imap.poczta.onet.pl",
+                            "port": "993",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        },
+                        {
+                            "type": "POP3",
+                            "server": "pop3.poczta.onet.pl",
+                            "port": "995",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        }
+                    ],
+                    "outgoingServers": [
+                        {
+                            "type": "SMTP",
+                            "server": "smtp.poczta.onet.pl",
+                            "port": "465",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        }
+                    ],
+                    "webmails": []
+                }
+            }
+        },
+        "autodis-prefix": {
+            "http_get": {
+                "config": {
+                    "incomingServers": [
+                        {
+                            "type": "IMAP",
+                            "server": "imap.poczta.onet.pl",
+                            "port": "993",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        },
+                        {
+                            "type": "POP3",
+                            "server": "pop3.poczta.onet.pl",
+                            "port": "995",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        }
+                    ],
+                    "outgoingServers": [
+                        {
+                            "type": "SMTP",
+                            "server": "smtp.poczta.onet.pl",
+                            "port": "465",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        }
+                    ],
+                    "webmails": []
+                }
+            },
+            "http_post": {
+                "config": {
+                    "incomingServers": [
+                        {
+                            "type": "IMAP",
+                            "server": "imap.poczta.onet.pl",
+                            "port": "993",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        },
+                        {
+                            "type": "POP3",
+                            "server": "pop3.poczta.onet.pl",
+                            "port": "995",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        }
+                    ],
+                    "outgoingServers": [
+                        {
+                            "type": "SMTP",
+                            "server": "smtp.poczta.onet.pl",
+                            "port": "465",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        }
+                    ],
+                    "webmails": []
+                }
+            },
+            "https_get": {
+                "verified": true,
+                "config": {
+                    "incomingServers": [
+                        {
+                            "type": "IMAP",
+                            "server": "imap.poczta.onet.pl",
+                            "port": "993",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        },
+                        {
+                            "type": "POP3",
+                            "server": "pop3.poczta.onet.pl",
+                            "port": "995",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        }
+                    ],
+                    "outgoingServers": [
+                        {
+                            "type": "SMTP",
+                            "server": "smtp.poczta.onet.pl",
+                            "port": "465",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        }
+                    ],
+                    "webmails": []
+                }
+            },
+            "https_post": {
+                "verified": true,
+                "config": {
+                    "incomingServers": [
+                        {
+                            "type": "IMAP",
+                            "server": "imap.poczta.onet.pl",
+                            "port": "993",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        },
+                        {
+                            "type": "POP3",
+                            "server": "pop3.poczta.onet.pl",
+                            "port": "995",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        }
+                    ],
+                    "outgoingServers": [
+                        {
+                            "type": "SMTP",
+                            "server": "smtp.poczta.onet.pl",
+                            "port": "465",
+                            "ssl": "on",
+                            "encryption": null,
+                            "spa": "off",
+                            "ttl": "1",
+                            "domainrequired": "on"
+                        }
+                    ],
+                    "webmails": []
+                }
+            }
+        },
+        "autodis-redirect": {},
+        "autodis-srv": {
+            "verified": true,
+            "config": {
+                "incomingServers": [
+                    {
+                        "type": "IMAP",
+                        "server": "imap.poczta.onet.pl",
+                        "port": "993",
+                        "ssl": "on",
+                        "encryption": null,
+                        "spa": "off",
+                        "ttl": "1",
+                        "domainrequired": "on"
+                    },
+                    {
+                        "type": "POP3",
+                        "server": "pop3.poczta.onet.pl",
+                        "port": "995",
+                        "ssl": "on",
+                        "encryption": null,
+                        "spa": "off",
+                        "ttl": "1",
+                        "domainrequired": "on"
+                    }
+                ],
+                "outgoingServers": [
+                    {
+                        "type": "SMTP",
+                        "server": "smtp.poczta.onet.pl",
+                        "port": "465",
+                        "ssl": "on",
+                        "encryption": null,
+                        "spa": "off",
+                        "ttl": "1",
+                        "domainrequired": "on"
+                    }
+                ],
+                "webmails": []
+            }
+        }
+    },
+    "srv": {
+        "imaps": {},
+        "imap": {
+            "srv_record": [
+                {
+                    "hostname": "imap.poczta.onet.pl",
+                    "port": 143,
+                    "priority": 15,
+                    "weight": 0
+                }
+            ],
+            "is_dnssec": false
+        },
+        "pop3s": {},
+        "pop3": {
+            "srv_record": [
+                {
+                    "hostname": "pop3.poczta.onet.pl",
+                    "port": 110,
+                    "priority": 15,
+                    "weight": 0
+                }
+            ],
+            "is_dnssec": false
+        },
+        "submissions": {},
+        "submission": {}
+    },
+    "buildin": {
+        "warning": [],
+        "mailcore": [],
+        "mailspring": [
+            {
+                "incomingServers": [
+                    {
+                        "type": "imap",
+                        "hostname": "",
+                        "port": "",
+                        "socketType": "ssl",
+                        "authentication": ""
+                    }
+                ],
+                "outgoingServers": [
+                    {
+                        "type": "smtp",
+                        "hostname": "smtp.poczta.onet.pl",
+                        "port": "465",
+                        "socketType": "ssl",
+                        "authentication": "password-cleartext"
+                    }
+                ]
+            }
+        ],
+        "nodemailer": [],
+        "DeltaChat": [],
+        "FairEmail": []
+    }
+}

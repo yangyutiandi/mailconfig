@@ -1,7 +1,10 @@
 {
-  "mailcore": ["domain_regular", "mx_regular"], 
-  "mailspring": [],
-  "nodemailer": [],
-  "DeltaChat": [],
-  "FairEmail": ["domain_regular"]
+  "mailcore": { 
+                       "domre" : ["domain_regular"], 
+                       "mxre" : ["mx_regular"] 
+                     }, 
+  "mailspring": {},
+  "nodemailer": {},
+  "DeltaChat": {},
+  "FairEmail": {"domre" : ["domain_regular"]}
 }

@@ -1,6 +1,7 @@
 import os
 import json
 import re
+from srv import resolve_mx
 
 def getkeylist(keys, item):
     re = []
@@ -10,6 +11,10 @@ def getkeylist(keys, item):
     return re
 
 def buildin(domain):
+    mxdomain = None
+    mxlist = resolve_mx(domain)
+    if mxlist:  # no mx record
+        mxdomain = mxlist[0]["hostname"]
     data = {}
     filepath = "./buildinlists"
     files = os.listdir(filepath)
@@ -40,12 +45,20 @@ def buildin(domain):
                 continue
             match = False
             if matchs:
-                matcher = getkeylist(matchs, item)
-                for restring in matcher:
-                    reinfo = re.match(restring, domain)
-                    if reinfo and reinfo.group() == domain:  #the regex must fully match the domain
-                        match = True
-                        break
+                if "domre" in matchs:
+                    matcher = getkeylist(matchs["domre"], item)
+                    for restring in matcher:
+                        reinfo = re.match(restring, domain)
+                        if reinfo and reinfo.group() == domain:  #the regex must fully match the domain
+                            match = True
+                            break
+                if mxdomain and not match and "mxre" in matchs:
+                    matcher = getkeylist(matchs["mxre"], item)
+                    for restring in matcher:
+                        reinfo = re.match(restring, mxdomain)
+                        if reinfo and reinfo.group() == mxdomain:  # the regex must fully match the domain
+                            match = True
+                            break
             if not match and "domain" in item:
                 if domain == item["domain"]:
                     match = True
@@ -57,9 +70,6 @@ def buildin(domain):
 
 if __name__ == "__main__":
 
-    # x = buildin('bigpond.net.au')
-    # x = buildin("gmail.com")
-    # x = buildin("mx1.comcast.net")
-    x = buildin("ymail.com")
+    x = buildin("gmail.com")
     json_string = json.dumps(x, indent=4, default=lambda obj: obj.__dict__)
     print(json_string)

@@ -63,7 +63,10 @@ def parse_autodiscover(content):
         "ns1": "http://schemas.microsoft.com/exchange/autodiscover/responseschema/2006",
         "ns2": "http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a"
     }
+    # use namespace in xml\etree\ElementPath.py, function xpath_tokenizer, A:B -> {namespace[A]}B
     root_element = tree.getroot()
+    # for child in root_element:
+    #     print(child.tag)
     # Parse for error response.
     response_for_error = root_element.find("ns1:Response", namespace)
     if response_for_error:
@@ -75,49 +78,59 @@ def parse_autodiscover(content):
             data['extract_error'] = "xmns: http://schemas.microsoft.com/exchange/autodiscover/responseschema/2006, message have an error"
             return data
     response = root_element.find("ns2:Response", namespace)
-    account = response.find("ns2:Account", namespace)
-    action = account.find("ns2:Action", namespace)
-    protocols = account.findall("ns2:Protocol", namespace)
+    prefix = "ns2:"
+    if not response:
+        response = root_element.find("Response", namespace)
+        if response:
+            data['extract_warning'] = "xmns: http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a not used"
+            prefix = ""
+        else :
+            data['extract_error'] = "xmns: http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a has no Response"
+            return data
+
+    account = response.find(prefix + "Account", namespace)
+    action = account.find(prefix + "Action", namespace)
+    protocols = account.findall(prefix + "Protocol", namespace)
     
     incoming_server_data = []
     outgoing_server_data = []
     web_access_data = []
     if action.text == "redirectAddr":
-        data["redirectAddr"] = account.find("ns2:RedirectAddr", namespace).text
+        data["redirectAddr"] = account.find(prefix + "RedirectAddr", namespace).text
     elif action.text == "redirectUrl":
-        data["redirectUrl"] = account.find("ns2:RedirectUrl", namespace).text
+        data["redirectUrl"] = account.find(prefix + "RedirectUrl", namespace).text
     elif action.text == "settings":
         for protocol in protocols:
-            if protocol.find("ns2:Type", namespace).text == "IMAP" or protocol.find("ns2:Type", namespace).text == "POP3":
+            if protocol.find(prefix + "Type", namespace).text == "IMAP" or protocol.find(prefix + "Type", namespace).text == "POP3":
                 server_data = {
-                    "type": protocol.find("ns2:Type", namespace).text,
-                    "server": protocol.find("ns2:Server", namespace).text,
-                    "port": protocol.find("ns2:Port", namespace).text,
-                    "ssl": get_element_text(protocol, "ns2:SSL", namespace, "on"),
-                    "encryption": get_element_text(protocol, "ns2:Encryption", namespace),
-                    "spa": get_element_text(protocol, "ns2:SPA", namespace, "on"),
-                    "ttl": get_element_text(protocol, "ns2:TTL", namespace, "1"),
-                    "domainrequired": get_element_text(protocol, "ns2:DomainRequired", namespace, "on")
+                    "type": protocol.find(prefix + "Type", namespace).text,
+                    "server": protocol.find(prefix + "Server", namespace).text,
+                    "port": protocol.find(prefix + "Port", namespace).text,
+                    "ssl": get_element_text(protocol, prefix + "SSL", namespace, "on"),
+                    "encryption": get_element_text(protocol, prefix + "Encryption", namespace),
+                    "spa": get_element_text(protocol, prefix + "SPA", namespace, "on"),
+                    "ttl": get_element_text(protocol, prefix + "TTL", namespace, "1"),
+                    "domainrequired": get_element_text(protocol, prefix + "DomainRequired", namespace, "on")
                 }
                 incoming_server_data.append(server_data)
-            if protocol.find("ns2:Type", namespace).text == "SMTP":
+            if protocol.find(prefix + "Type", namespace).text == "SMTP":
                 server_data = {
-                    "type": protocol.find("ns2:Type", namespace).text,
-                    "server": protocol.find("ns2:Server", namespace).text,
-                    "port": protocol.find("ns2:Port", namespace).text,
-                    "ssl": get_element_text(protocol, "ns2:SSL", namespace, "on"),
-                    "encryption": get_element_text(protocol, "ns2:Encryption", namespace),
-                    "spa": get_element_text(protocol, "ns2:SPA", namespace, "on"),
-                    "ttl": get_element_text(protocol, "ns2:TTL", namespace, "1"),
-                    "domainrequired": get_element_text(protocol, "ns2:DomainRequired", namespace, "on")
+                    "type": protocol.find(prefix + "Type", namespace).text,
+                    "server": protocol.find(prefix + "Server", namespace).text,
+                    "port": protocol.find(prefix + "Port", namespace).text,
+                    "ssl": get_element_text(protocol, prefix + "SSL", namespace, "on"),
+                    "encryption": get_element_text(protocol, prefix + "Encryption", namespace),
+                    "spa": get_element_text(protocol, prefix + "SPA", namespace, "on"),
+                    "ttl": get_element_text(protocol, prefix + "TTL", namespace, "1"),
+                    "domainrequired": get_element_text(protocol, prefix + "DomainRequired", namespace, "on")
                 }
                 outgoing_server_data.append(server_data)
-            if protocol.find("ns2:Type", namespace).text == "WEB":
-                if protocol.find("ns2:External", namespace):
+            if protocol.find(prefix + "Type", namespace).text == "WEB":
+                if protocol.find(prefix + "External", namespace):
                     server_data["External"] = {}
-                    if protocol.find("ns2:External", namespace).find("ns2:OWAUrl", namespace):
-                        server_data["External"]["OWAUrl"]["AuthenticationMethod"] = protocol.find("ns2:External", namespace).find("ns2:OWAUrl", namespace).get("AuthenticationMethod")
-                        server_data["External"]["OWAUrl"]["URL"] = protocol.find("ns2:External", namespace).find("ns2:OWAUrl", namespace).text
+                    if protocol.find(prefix + "External", namespace).find(prefix + "OWAUrl", namespace):
+                        server_data["External"]["OWAUrl"]["AuthenticationMethod"] = protocol.find(prefix + "External", namespace).find(prefix + "OWAUrl", namespace).get("AuthenticationMethod")
+                        server_data["External"]["OWAUrl"]["URL"] = protocol.find(prefix + "External", namespace).find(prefix + "OWAUrl", namespace).text
                         web_access_data.append(server_data)
         data = {"incomingServers": incoming_server_data, "outgoingServers": outgoing_server_data, "webmails": web_access_data}
     return data

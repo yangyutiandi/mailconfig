@@ -182,11 +182,13 @@ def valid_add(tree, list, info):
     now["other_info"].append(info)
 
 # need to check none
-def autoconfig_param_check(configs, tree):
+def autoconfig_param_check(configs, tree, domain = None):
     for item in configs:
         if not check_type(item["type"].lower()):
             invalid_add(tree, item, f'proto_type = {item["type"]}, type error')
             continue
+        if domain:   # format sub.{domain} string
+            item["hostname"] = item["hostname"].format(domain = domain)
         if not check_port(item["port"]) or not check_domain(item["hostname"]):
             invalid_add(tree, item, f'{item["hostname"]}:{item["port"]}, hostname and port error')
             continue
@@ -238,7 +240,7 @@ def srv_check(data, tree, priority = False):
     res = flat_srv(data, priority)
     srv_param_check(res, tree)
 
-def buildin_check(data, tree):
+def buildin_check(data, tree, domain):
     res = []
     for key, item in data.items():
         configlist = []
@@ -250,10 +252,10 @@ def buildin_check(data, tree):
             for i in range(len(configlist)):
                 configlist[i]["config_info"] = {"orign" : "build_in:" + key}
         res += configlist
-    autoconfig_param_check(res, tree)
+    autoconfig_param_check(res, tree, domain)
 
 
-def param_check(data, priority = False):
+def param_check(data, domain, priority = False):
     tree = {}
     if "autoconfig" in data:
         autoconfig_check(data["autoconfig"], tree, priority)
@@ -262,7 +264,7 @@ def param_check(data, priority = False):
     if "srv" in data:
         srv_check(data["srv"], tree, priority)
     if "buildin" in data:
-        buildin_check(data["buildin"], tree)
+        buildin_check(data["buildin"], tree, domain)
     return tree
 
 if __name__=="__main__":

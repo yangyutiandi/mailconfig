@@ -93,8 +93,8 @@ def srv(domain):
     data["imap"] = resolve_srv(f"_imap._tcp.{domain}")
     data["pop3s"] = resolve_srv(f"_pop3s._tcp.{domain}")
     data["pop3"] = resolve_srv(f"_pop3._tcp.{domain}")
-    data["submissions"] = resolve_srv(f"_submissions.tcp.{domain}")
-    data["submission"] = resolve_srv(f"_submission.tcp.{domain}")
+    data["smtps"] = resolve_srv(f"_submissions.tcp.{domain}")
+    data["smtp"] = resolve_srv(f"_submission.tcp.{domain}")
     return data
 
 
